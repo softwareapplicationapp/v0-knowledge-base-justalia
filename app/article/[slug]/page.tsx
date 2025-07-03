@@ -8,7 +8,6 @@ import type { Article } from "@/lib/types"
 import Link from "next/link"
 import { ArrowLeft, Eye } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
-import "react-quill/dist/quill.snow.css"
 
 export default function ArticlePage() {
   const params = useParams()
@@ -83,7 +82,7 @@ export default function ArticlePage() {
           </div>
         </div>
 
-        <div className="prose prose-lg max-w-none ql-editor" dangerouslySetInnerHTML={{ __html: article.content }} />
+        <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: article.content }} />
       </div>
     </div>
   )
