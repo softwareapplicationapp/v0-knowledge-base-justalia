@@ -26,43 +26,45 @@ export default function ArticlePage() {
   const category = article ? getCategoryById(article.category) : undefined
 
   if (articlesLoading || categoriesLoading || article === undefined) {
-    return <div>Cargando artículo...</div>
+    return <div className="flex justify-center items-center min-h-screen">Cargando artículo...</div>
   }
 
   if (article === null) {
-    return <div>Artículo no encontrado.</div>
+    return <div className="flex justify-center items-center min-h-screen">Artículo no encontrado.</div>
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b shadow-sm">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <header className="bg-white dark:bg-gray-950 border-b dark:border-gray-800 shadow-sm sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <Link href="/" className="flex items-center space-x-3">
               <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
                 <ArrowLeft className="w-5 h-5 text-white" />
               </div>
-              <h1 className="text-2xl font-bold text-gray-900">Justalia - Base de Conocimiento HubSpot</h1>
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-50">
+                Justalia - Base de Conocimiento HubSpot
+              </h1>
             </Link>
           </div>
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <nav className="flex items-center space-x-2 text-sm text-gray-500 mb-6">
-          <Link href="/" className="hover:text-gray-700">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+        <nav className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400 mb-6">
+          <Link href="/" className="hover:text-gray-700 dark:hover:text-gray-200">
             Inicio
           </Link>
           <span>/</span>
           {category && (
             <>
-              <Link href={`/category/${category.id}`} className="hover:text-gray-700">
+              <Link href={`/category/${category.id}`} className="hover:text-gray-700 dark:hover:text-gray-200">
                 {category.title}
               </Link>
               <span>/</span>
             </>
           )}
-          <span className="text-gray-900 truncate">{article.title}</span>
+          <span className="text-gray-900 dark:text-gray-50 truncate">{article.title}</span>
         </nav>
 
         <div className="mb-8">
@@ -71,9 +73,11 @@ export default function ArticlePage() {
               {category.title}
             </Badge>
           )}
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">{article.title}</h1>
-          <p className="text-xl text-gray-600 mb-6">{article.description}</p>
-          <div className="flex items-center justify-between text-sm text-gray-500 pb-6 border-b">
+          <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-gray-50 mb-4">
+            {article.title}
+          </h1>
+          <p className="text-xl text-gray-600 dark:text-gray-300 mb-6">{article.description}</p>
+          <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 pb-6 border-b dark:border-gray-800">
             <div className="flex items-center space-x-1">
               <Eye className="w-4 h-4" />
               <span>{article.views} vistas</span>
@@ -82,8 +86,11 @@ export default function ArticlePage() {
           </div>
         </div>
 
-        <article className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: article.content }} />
-      </div>
+        <article
+          className="prose prose-lg dark:prose-invert max-w-none"
+          dangerouslySetInnerHTML={{ __html: article.content }}
+        />
+      </main>
     </div>
   )
 }
