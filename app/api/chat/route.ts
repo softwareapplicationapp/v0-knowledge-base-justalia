@@ -1,5 +1,5 @@
-import { openai, embed } from "@ai-sdk/openai"
-import { streamText, type CoreMessage } from "ai"
+import { openai } from "@ai-sdk/openai"
+import { embed, streamText, type CoreMessage } from "ai"
 import type { Article } from "@/lib/types"
 import { NextResponse } from "next/server"
 
