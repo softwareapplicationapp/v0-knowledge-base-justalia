@@ -7,10 +7,11 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { SendHorizonal, Bot, User } from "lucide-react"
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 
 export function ChatPopup() {
   const { articles, loading: articlesLoading } = useArticles()
+  const scrollAreaRef = useRef<HTMLDivElement>(null)
 
   const { messages, input, handleInputChange, handleSubmit, isLoading, error } = useChat({
     api: "/api/chat",
@@ -18,6 +19,15 @@ export function ChatPopup() {
       articles: articles,
     },
   })
+
+  useEffect(() => {
+    if (scrollAreaRef.current) {
+      scrollAreaRef.current.scrollTo({
+        top: scrollAreaRef.current.scrollHeight,
+        behavior: "smooth",
+      })
+    }
+  }, [messages])
 
   useEffect(() => {
     if (error) {
@@ -33,9 +43,9 @@ export function ChatPopup() {
           Asistente de Conocimiento
         </CardTitle>
       </CardHeader>
-      <CardContent className="flex-1 p-0">
-        <ScrollArea className="h-full p-4">
-          <div className="space-y-6">
+      <CardContent className="flex-1 p-0 overflow-hidden">
+        <ScrollArea className="h-full" ref={scrollAreaRef}>
+          <div className="space-y-6 p-4">
             {messages.length === 0 && (
               <div className="text-center text-sm text-muted-foreground p-8">
                 <p className="mb-2">Hola, soy tu asistente virtual.</p>
@@ -46,7 +56,7 @@ export function ChatPopup() {
               <div key={m.id} className={`flex gap-3 ${m.role === "user" ? "justify-end" : ""}`}>
                 {m.role === "assistant" && <Bot className="w-6 h-6 text-primary flex-shrink-0" />}
                 <div
-                  className={`rounded-lg p-3 max-w-sm ${m.role === "user" ? "bg-primary text-primary-foreground" : "bg-muted"}`}
+                  className={`rounded-lg p-3 max-w-sm break-words ${m.role === "user" ? "bg-primary text-primary-foreground" : "bg-muted"}`}
                 >
                   <p className="text-sm whitespace-pre-wrap">{m.content}</p>
                 </div>

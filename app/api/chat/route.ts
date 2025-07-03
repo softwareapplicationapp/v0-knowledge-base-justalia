@@ -1,4 +1,4 @@
-import { openai } from "@ai-sdk/openai"
+import { openai, embed } from "@ai-sdk/openai"
 import { streamText, type CoreMessage } from "ai"
 import type { Article } from "@/lib/types"
 import { NextResponse } from "next/server"
@@ -7,108 +7,29 @@ import { NextResponse } from "next/server"
 export const runtime = "edge"
 
 /**
- * Finds the most relevant articles from a list based on a user's query.
- * This improved version uses a scoring mechanism based on token frequency
- * and gives a significant boost to title matches.
+ * Calculates the cosine similarity between two vectors.
+ * This is used to determine how similar the user's query is to each article.
  */
-const findMostRelevantArticles = (query: string, articles: Article[], count = 3) => {
-  // A list of common Spanish stop words to ignore.
-  const stopWords = new Set([
-    "de",
-    "a",
-    "el",
-    "la",
-    "los",
-    "las",
-    "un",
-    "una",
-    "unos",
-    "unas",
-    "y",
-    "e",
-    "o",
-    "u",
-    "pero",
-    "mas",
-    "sino",
-    "con",
-    "sin",
-    "sobre",
-    "para",
-    "por",
-    "se",
-    "le",
-    "les",
-    "su",
-    "sus",
-    "mi",
-    "mis",
-    "tu",
-    "tus",
-    "que",
-    "como",
-    "cuando",
-    "donde",
-    "quien",
-    "es",
-    "son",
-    "fue",
-    "fueron",
-    "del",
-    "al",
-    "me",
-    "lo",
-  ])
-
-  // A simple tokenizer that cleans, normalizes, and removes stop words.
-  const tokenize = (text: string): string[] => {
-    if (!text) return []
-    return text
-      .toLowerCase()
-      .replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, "") // Remove punctuation
-      .split(/\s+/)
-      .filter((word) => word.length > 2 && !stopWords.has(word))
+function cosineSimilarity(vecA: number[], vecB: number[]): number {
+  if (vecA.length !== vecB.length) {
+    return 0
   }
-
-  const queryTokens = tokenize(query)
-
-  if (queryTokens.length === 0) {
-    return []
+  let dotProduct = 0
+  let normA = 0
+  let normB = 0
+  for (let i = 0; i < vecA.length; i++) {
+    dotProduct += vecA[i] * vecB[i]
+    normA += vecA[i] * vecA[i]
+    normB += vecB[i] * vecB[i]
   }
-
-  const scoredArticles = articles.map((article) => {
-    const articleContent = `${article.title} ${article.description} ${article.content}`
-    const articleTokens = tokenize(articleContent)
-
-    let score = 0
-    // Calculate score based on the frequency of query tokens in the article.
-    queryTokens.forEach((queryToken) => {
-      score += articleTokens.filter((articleToken) => articleToken === queryToken).length
-    })
-
-    // Add a significant bonus for matching words in the title.
-    const titleTokens = tokenize(article.title)
-    queryTokens.forEach((queryToken) => {
-      if (titleTokens.includes(queryToken)) {
-        score += 5 // Boost score significantly if a keyword is in the title.
-      }
-    })
-
-    return { article, score }
-  })
-
-  // Filter out articles with a score of 0 and sort by the highest score.
-  const relevantArticles = scoredArticles.filter((item) => item.score > 0).sort((a, b) => b.score - a.score)
-
-  // For debugging: log the scores to see how the engine is ranking articles.
-  // console.log("Scored Articles:", relevantArticles.map(a => ({ title: a.article.title, score: a.score })));
-
-  return relevantArticles.slice(0, count).map((item) => item.article)
+  if (normA === 0 || normB === 0) {
+    return 0
+  }
+  return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB))
 }
 
 export async function POST(req: Request) {
   try {
-    // Check for OpenAI API key in environment variables
     if (!process.env.OPENAI_API_KEY) {
       return new NextResponse(JSON.stringify({ error: "OpenAI API key is not set." }), {
         status: 500,
@@ -116,13 +37,11 @@ export async function POST(req: Request) {
       })
     }
 
-    const body = await req.json()
-    const { messages, articles } = body as {
+    const { messages, articles } = (await req.json()) as {
       messages: CoreMessage[]
       articles: Article[]
     }
 
-    // Validate that the request body contains the expected data
     if (!messages || !Array.isArray(messages) || messages.length === 0) {
       return new NextResponse(JSON.stringify({ error: "Invalid 'messages' in request body." }), {
         status: 400,
@@ -138,8 +57,35 @@ export async function POST(req: Request) {
 
     const userQuery = messages[messages.length - 1].content as string
 
-    // 1. Retrieval: Find relevant articles using the improved logic.
-    const relevantArticles = findMostRelevantArticles(userQuery, articles)
+    // 1. Retrieval using Semantic Search (Embeddings)
+    // Generate embedding for the user's query
+    const { embedding: queryEmbedding } = await embed({
+      model: openai.embedding("text-embedding-ada-002"),
+      value: userQuery,
+    })
+
+    // Generate embeddings for all articles and calculate similarity
+    const articleEmbeddings = await Promise.all(
+      articles.map(async (article) => {
+        const { embedding } = await embed({
+          model: openai.embedding("text-embedding-ada-002"),
+          value: `${article.title}\n${article.description}\n${article.content}`,
+        })
+        return { article, embedding }
+      }),
+    )
+
+    const scoredArticles = articleEmbeddings.map((item) => ({
+      article: item.article,
+      similarity: cosineSimilarity(queryEmbedding, item.embedding),
+    }))
+
+    // Sort articles by similarity and filter out those with low relevance
+    const relevantArticles = scoredArticles
+      .sort((a, b) => b.similarity - a.similarity)
+      .filter((item) => item.similarity > 0.75) // Use a threshold to ensure relevance
+      .slice(0, 3) // Take the top 3 most relevant articles
+      .map((item) => item.article)
 
     // 2. Augmentation: Create the context string for the AI
     const context =
@@ -168,7 +114,6 @@ ${context}
       messages: processedMessages,
     })
 
-    // The crucial fix: use toDataStreamResponse() to correctly stream the response
     return result.toDataStreamResponse()
   } catch (e) {
     console.error("Chat API Error:", e)
