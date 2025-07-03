@@ -1,73 +1,83 @@
-import { ArrowLeft, Clock, Eye, User, CheckCircle, AlertCircle, ArrowRight } from "lucide-react"
+import { ArrowLeft, Clock, Eye, User, Zap } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 export default function DealStagesArticle() {
   const stages = [
     {
       name: "Listo para asignar",
-      description: "El lead acaba de llegar al sistema",
-      yourAction: "El sistema te asignará automáticamente casos de esta etapa",
-      automatic: true,
-      color: "bg-gray-100 text-gray-800",
+      description: "¡Nuevo cliente potencial! El caso acaba de entrar al sistema.",
+      yourAction: "No tienes que hacer nada. El sistema te asignará el caso automáticamente si te toca.",
+      isAutomatic: true,
+      color: "bg-green-100 text-green-800",
+      borderColor: "border-green-500",
     },
     {
       name: "Contacto Pendiente",
-      description: "Tienes que llamar al cliente por primera vez",
-      yourAction: "Llama al cliente para hacer la primera consulta",
-      automatic: false,
+      description: "El caso es tuyo. Es el momento de hacer la primera llamada.",
+      yourAction:
+        "Llama al cliente para presentarte, entender su situación y explicarle cómo podemos ayudarle. ¡Esta primera llamada es clave!",
+      isAutomatic: false,
       color: "bg-yellow-100 text-yellow-800",
+      borderColor: "border-yellow-500",
     },
     {
       name: "Contacto Programado",
-      description: "Ya hablaste con el cliente y programaste una segunda llamada",
-      yourAction: "Realiza la llamada programada en la fecha acordada",
-      automatic: false,
+      description: "Hablaste con el cliente y acordaste una fecha para volver a llamar.",
+      yourAction: "El sistema te recordará la llamada. Asegúrate de cumplir con la fecha y hora programada.",
+      isAutomatic: false,
       color: "bg-blue-100 text-blue-800",
+      borderColor: "border-blue-500",
     },
     {
       name: "Documentación Solicitada",
-      description: "El cliente debe enviar documentos para continuar",
-      yourAction: "Hacer seguimiento hasta que el cliente envíe los documentos",
-      automatic: false,
+      description: "El cliente está interesado y le has pedido los documentos necesarios.",
+      yourAction:
+        "Haz seguimiento por email o WhatsApp para recordarle amablemente que envíe los documentos. El sistema también te ayudará con tareas de recordatorio.",
+      isAutomatic: false,
       color: "bg-orange-100 text-orange-800",
+      borderColor: "border-orange-500",
     },
     {
       name: "Solicitado - Autorización y LSA/LFA",
-      description: "Los documentos están siendo revisados por el equipo legal",
-      yourAction: "Esperar. El equipo legal revisará automáticamente",
-      automatic: true,
+      description: "¡Genial! El cliente ha enviado los documentos. Ahora pasan a revisión.",
+      yourAction:
+        "Nada. El equipo legal (Pre-LSA) tomará el caso desde aquí para revisarlo todo. Tu trabajo en esta fase ha terminado.",
+      isAutomatic: true,
       color: "bg-purple-100 text-purple-800",
+      borderColor: "border-purple-500",
     },
     {
-      name: "Listo para reclamación - Estudio de viabilidad",
-      description: "El caso está siendo evaluado para ver si es viable",
-      yourAction: "Esperar. El sistema asignará automáticamente al equipo Pre-LSA",
-      automatic: true,
+      name: "Listo para reclamación",
+      description: "El equipo legal ha estudiado el caso y ha determinado que es viable.",
+      yourAction: "Nada. El caso sigue su curso legal de forma automática.",
+      isAutomatic: true,
       color: "bg-indigo-100 text-indigo-800",
+      borderColor: "border-indigo-500",
     },
     {
       name: "Caso abierto",
-      description: "El caso fue aprobado y está en proceso legal",
-      yourAction: "El caso pasa al equipo de Customer Service automáticamente",
-      automatic: true,
-      color: "bg-green-100 text-green-800",
+      description: "¡Felicidades! El caso ha sido aceptado y se ha iniciado el proceso de reclamación.",
+      yourAction: "Nada. El equipo de Customer Service se encargará del cliente a partir de ahora.",
+      isAutomatic: true,
+      color: "bg-teal-100 text-teal-800",
+      borderColor: "border-teal-500",
     },
     {
       name: "Perdido",
-      description: "El caso no prosperó por algún motivo",
-      yourAction: "Revisar el motivo y aprender para futuros casos",
-      automatic: false,
+      description: "El cliente no continúa con el proceso.",
+      yourAction: "Asegúrate de que el motivo de la pérdida esté bien registrado. Esto nos ayuda a mejorar.",
+      isAutomatic: false,
       color: "bg-red-100 text-red-800",
+      borderColor: "border-red-500",
     },
   ]
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
       <header className="bg-white border-b shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
@@ -82,7 +92,6 @@ export default function DealStagesArticle() {
       </header>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Breadcrumb */}
         <nav className="flex items-center space-x-2 text-sm text-gray-500 mb-6">
           <Link href="/" className="hover:text-gray-700">
             Inicio
@@ -95,180 +104,110 @@ export default function DealStagesArticle() {
           <span className="text-gray-900">Etapas de Casos</span>
         </nav>
 
-        {/* Article Header */}
         <div className="mb-8">
-          <div className="flex items-center space-x-2 mb-4">
-            <Badge variant="secondary">Gestión de Casos</Badge>
-            <Badge variant="default">Básico</Badge>
-          </div>
-
+          <Badge variant="secondary" className="mb-4">
+            Gestión de Casos
+          </Badge>
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Entender las etapas de mis casos</h1>
           <p className="text-xl text-gray-600 mb-6">
-            Cada caso pasa por diferentes etapas. Algunas requieren tu acción, otras son automáticas.
+            Cada caso viaja por un camino con diferentes paradas. Conoce qué pasa en cada una y cuál es tu papel.
           </p>
-
           <div className="flex items-center justify-between text-sm text-gray-500 pb-6 border-b">
             <div className="flex items-center space-x-6">
               <div className="flex items-center space-x-1">
                 <User className="w-4 h-4" />
-                <span>Equipo de Soporte</span>
+                <span>Equipo de Operaciones</span>
               </div>
               <div className="flex items-center space-x-1">
                 <Clock className="w-4 h-4" />
-                <span>6 min</span>
+                <span>8 min</span>
               </div>
               <div className="flex items-center space-x-1">
                 <Eye className="w-4 h-4" />
-                <span>1,450 vistas</span>
+                <span>250 vistas</span>
               </div>
             </div>
-            <span>Actualizado: 15 enero 2024</span>
+            <span>Actualizado: 3 junio 2025</span>
           </div>
         </div>
 
-        {/* Important Alert */}
-        <Alert className="mb-8">
-          <AlertCircle className="h-4 w-4" />
-          <AlertDescription>
-            <strong>Importante:</strong> Muchas etapas son automáticas. Tu trabajo principal está en las primeras etapas
-            donde tienes contacto directo con el cliente.
+        <Alert className="mb-8 bg-yellow-50 border-yellow-200">
+          <Zap className="h-4 w-4 text-yellow-600" />
+          <AlertTitle className="text-yellow-800">Tu Foco Principal</AlertTitle>
+          <AlertDescription className="text-yellow-700">
+            Tu trabajo más importante ocurre en las primeras etapas:{" "}
+            <strong>Contacto Pendiente, Contacto Programado y Documentación Solicitada</strong>. Aquí es donde tu
+            habilidad para conectar con el cliente marca la diferencia.
           </AlertDescription>
         </Alert>
 
-        {/* Content */}
         <div className="prose prose-lg max-w-none mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">¿Cómo funciona el proceso?</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">El Viaje de un Caso</h2>
           <p className="mb-6">
-            Cuando un cliente potencial llena un formulario en nuestra web, se crea automáticamente un "caso" en el
-            sistema. Este caso pasa por diferentes etapas hasta convertirse en un cliente real o descartarse.
+            Desde que un cliente muestra interés hasta que su caso se resuelve, pasa por varias fases. Algunas dependen
+            100% de ti, mientras que en otras el sistema trabaja por su cuenta para agilizar el proceso.
           </p>
-
-          <h3 className="text-xl font-semibold text-gray-900 mb-4">Tu papel en el proceso:</h3>
-          <ul className="list-disc pl-6 mb-8 space-y-2">
-            <li>
-              <strong>Contacto inicial:</strong> Eres la primera persona que habla con el cliente
-            </li>
-            <li>
-              <strong>Recopilación de información:</strong> Obtienes los datos necesarios para evaluar el caso
-            </li>
-            <li>
-              <strong>Seguimiento:</strong> Te aseguras de que el cliente envíe la documentación requerida
-            </li>
-            <li>
-              <strong>Traspaso:</strong> Una vez completa la información, el caso pasa automáticamente al equipo legal
-            </li>
-          </ul>
         </div>
 
-        {/* Stages */}
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Etapas del proceso</h2>
-          <div className="space-y-4">
-            {stages.map((stage, index) => (
-              <Card key={index} className="border-l-4 border-l-blue-500">
-                <CardContent className="p-6">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-3 mb-2">
-                        <Badge className={stage.color}>{stage.name}</Badge>
-                        {stage.automatic && (
-                          <Badge variant="outline" className="text-xs">
-                            <CheckCircle className="w-3 h-3 mr-1" />
-                            Automático
-                          </Badge>
-                        )}
-                      </div>
-                      <p className="text-gray-600 mb-3">{stage.description}</p>
-                    </div>
-                  </div>
+        <div className="space-y-4 mb-8">
+          {stages.map((stage, index) => (
+            <Card key={index} className={`border-l-4 ${stage.borderColor}`}>
+              <CardContent className="p-6">
+                <div className="flex items-center space-x-3 mb-2">
+                  <Badge className={`${stage.color} font-semibold`}>{stage.name}</Badge>
+                  {stage.isAutomatic && (
+                    <Badge variant="outline" className="text-xs border-purple-300 text-purple-700">
+                      <Zap className="w-3 h-3 mr-1" />
+                      Automático
+                    </Badge>
+                  )}
+                </div>
+                <p className="text-gray-600 mb-4">{stage.description}</p>
 
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <h4 className="font-semibold text-gray-900 mb-2">
-                      {stage.automatic ? "¿Qué pasa automáticamente?" : "¿Qué tienes que hacer?"}
-                    </h4>
-                    <p className="text-gray-700">{stage.yourAction}</p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                <div className="bg-gray-50 p-4 rounded-lg border">
+                  <h4 className="font-semibold text-gray-900 mb-2">
+                    {stage.isAutomatic ? "¿Qué pasa automáticamente?" : "¿Qué tienes que hacer tú?"}
+                  </h4>
+                  <p className="text-gray-700">{stage.yourAction}</p>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
 
-        {/* Process Flow Diagram */}
         <Card className="mb-8">
           <CardHeader>
-            <CardTitle>Flujo Visual del Proceso</CardTitle>
+            <CardTitle>Flujo Visual Simplificado</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex flex-col space-y-4">
-              <div className="flex items-center space-x-2 text-sm">
-                <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                <span>Etapas donde TÚ trabajas activamente</span>
-              </div>
-              <div className="flex items-center space-x-2 text-sm">
-                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                <span>Etapas automáticas (el sistema trabaja solo)</span>
-              </div>
-
-              <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-                <div className="flex flex-wrap items-center gap-2 text-sm">
-                  <Badge className="bg-green-100 text-green-800">Listo para asignar</Badge>
-                  <ArrowRight className="w-4 h-4 text-gray-400" />
-                  <Badge className="bg-yellow-100 text-yellow-800">Contacto Pendiente</Badge>
-                  <ArrowRight className="w-4 h-4 text-gray-400" />
-                  <Badge className="bg-yellow-100 text-yellow-800">Contacto Programado</Badge>
-                  <ArrowRight className="w-4 h-4 text-gray-400" />
-                  <Badge className="bg-yellow-100 text-yellow-800">Documentación Solicitada</Badge>
-                  <ArrowRight className="w-4 h-4 text-gray-400" />
-                  <Badge className="bg-green-100 text-green-800">Proceso Legal</Badge>
+            <div className="relative">
+              <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gray-200" aria-hidden="true"></div>
+              <div className="relative flex flex-col gap-8">
+                <div className="flex items-center gap-4">
+                  <div className="flex-1 text-right font-semibold text-yellow-600">TU ACCIÓN</div>
+                  <div className="w-4 h-4 bg-yellow-400 rounded-full z-10 border-2 border-white"></div>
+                  <div className="flex-1 text-left">Contacto y Documentación</div>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="flex-1 text-right">Revisión Legal</div>
+                  <div className="w-4 h-4 bg-purple-400 rounded-full z-10 border-2 border-white"></div>
+                  <div className="flex-1 text-left font-semibold text-purple-600">AUTOMÁTICO</div>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="flex-1 text-right font-semibold text-yellow-600">TU ACCIÓN</div>
+                  <div className="w-4 h-4 bg-yellow-400 rounded-full z-10 border-2 border-white"></div>
+                  <div className="flex-1 text-left">Cerrar como Perdido</div>
                 </div>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        {/* FAQ Section */}
-        <Card className="mb-8">
-          <CardHeader>
-            <CardTitle>Preguntas Frecuentes</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div>
-              <h4 className="font-semibold text-gray-900 mb-2">¿Cuánto tiempo puede estar un caso en cada etapa?</h4>
-              <p className="text-gray-600">
-                No hay límite fijo, pero generalmente: Contacto Pendiente (1-3 días), Documentación Solicitada (1-2
-                semanas), Proceso Legal (2-4 semanas).
-              </p>
-            </div>
-            <div>
-              <h4 className="font-semibold text-gray-900 mb-2">¿Puedo mover un caso manualmente a otra etapa?</h4>
-              <p className="text-gray-600">
-                En la mayoría de casos, no. El sistema mueve los casos automáticamente cuando se cumplen las
-                condiciones. Si hay un problema, contacta a tu supervisor.
-              </p>
-            </div>
-            <div>
-              <h4 className="font-semibold text-gray-900 mb-2">¿Qué pasa si un cliente no responde?</h4>
-              <p className="text-gray-600">
-                Después de varios intentos de contacto sin respuesta, el caso puede marcarse como "Perdido". Tu
-                supervisor te dará las pautas específicas.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Navigation */}
-        <div className="flex justify-between">
+        <div className="mt-12 flex justify-between">
           <Link href="/category/deals-management">
             <Button variant="outline">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Volver a Gestión de Casos
-            </Button>
-          </Link>
-          <Link href="/article/deals-2">
-            <Button>
-              Siguiente: Diferencias entre Pipelines
-              <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
           </Link>
         </div>

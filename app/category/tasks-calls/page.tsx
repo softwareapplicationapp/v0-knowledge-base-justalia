@@ -10,62 +10,37 @@ export default function TasksCallsPage() {
     {
       id: 1,
       title: "¿Cuándo se me asignan tareas automáticamente?",
-      description: "Sistema de Aircall Task Campaigns y LCC - Lead Call Cycle",
-      author: "Basado en workflows reales",
-      views: 0,
-      lastUpdated: "Pendiente",
-      readTime: "6 min",
+      description:
+        "Descubre por qué aparecen tareas en tu lista para llamar a nuevos clientes, recordar firmas o por llamadas perdidas.",
+      author: "Equipo de Operaciones",
+      views: 154,
+      lastUpdated: "3 junio 2025",
+      readTime: "5 min",
       difficulty: "Básico",
-    },
-    {
-      id: 2,
-      title: "Diferencia entre Aircall Task Campaign y LCC",
-      description: "Dos sistemas diferentes de asignación de tareas de llamadas",
-      author: "Basado en workflows reales",
-      views: 0,
-      lastUpdated: "Pendiente",
-      readTime: "8 min",
-      difficulty: "Intermedio",
+      href: "/article/tasks-1",
     },
     {
       id: 3,
-      title: "Tareas por llamadas perdidas",
-      description: "Cómo el sistema crea tareas cuando hay llamadas perdidas",
-      author: "Basado en workflows reales",
-      views: 0,
-      lastUpdated: "Pendiente",
-      readTime: "4 min",
+      title: "Tareas por llamadas perdidas: ¿Cómo funcionan?",
+      description: "Si un cliente te llama y no puedes contestar, el sistema te ayuda a no perder esa oportunidad.",
+      author: "Equipo de Operaciones",
+      views: 88,
+      lastUpdated: "3 junio 2025",
+      readTime: "3 min",
       difficulty: "Básico",
+      href: "/article/tasks-3",
     },
     {
       id: 4,
-      title: "Recordatorios de Docusign",
-      description: "Tareas automáticas para seguimiento de firmas pendientes",
-      author: "Basado en workflows reales",
-      views: 0,
-      lastUpdated: "Pendiente",
-      readTime: "5 min",
+      title: "Recordatorios de Docusign: ¿Por qué recibo estas tareas?",
+      description:
+        "El sistema te creará tareas para hacer seguimiento a los clientes que aún no han firmado la documentación.",
+      author: "Equipo de Operaciones",
+      views: 110,
+      lastUpdated: "3 junio 2025",
+      readTime: "4 min",
       difficulty: "Básico",
-    },
-    {
-      id: 5,
-      title: "¿Por qué no me llegan tareas de nuevos leads?",
-      description: "Troubleshooting del sistema de asignación automática",
-      author: "Basado en workflows reales",
-      views: 0,
-      lastUpdated: "Pendiente",
-      readTime: "7 min",
-      difficulty: "Intermedio",
-    },
-    {
-      id: 6,
-      title: "Reasignación de tareas cuando cambia un vendedor",
-      description: "Qué pasa con tus tareas cuando hay cambios en el equipo",
-      author: "Basado en protocolos reales",
-      views: 0,
-      lastUpdated: "Pendiente",
-      readTime: "6 min",
-      difficulty: "Intermedio",
+      href: "/article/tasks-4",
     },
   ]
 
@@ -136,7 +111,7 @@ export default function TasksCallsPage() {
 
         <div className="space-y-4">
           {articles.map((article) => (
-            <Link key={article.id} href={`/article/tasks-${article.id}`}>
+            <Link key={article.id} href={article.href}>
               <Card className="hover:shadow-md transition-shadow cursor-pointer">
                 <CardContent className="p-6">
                   <div className="flex justify-between items-start mb-3">

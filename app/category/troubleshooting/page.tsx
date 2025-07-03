@@ -9,69 +9,29 @@ export default function TroubleshootingPage() {
   const articles = [
     {
       id: 1,
-      title: "¿Por qué no veo algunos casos o contactos?",
-      description: "Problemas de permisos: 'Su equipo' vs 'Todo' vs 'Sin asignar'",
-      author: "Basado en configuración real",
-      views: 0,
-      lastUpdated: "Pendiente",
+      title: "¿Por qué no puedo ver ciertos casos o contactos?",
+      description:
+        "La solución a la duda más frecuente. Entiende las reglas de visibilidad de 'Mi equipo' vs 'Sin asignar'.",
+      author: "Equipo de Operaciones",
+      views: 121,
+      lastUpdated: "3 junio 2025",
       readTime: "3 min",
       difficulty: "Básico",
       priority: "Alta",
-    },
-    {
-      id: 2,
-      title: "No me llegan las tareas automáticas",
-      description: "Problemas con Aircall Task Campaigns y LCC",
-      author: "Basado en workflows reales",
-      views: 0,
-      lastUpdated: "Pendiente",
-      readTime: "4 min",
-      difficulty: "Básico",
-      priority: "Alta",
-    },
-    {
-      id: 3,
-      title: "Error: No puedo editar este contacto/caso",
-      description: "Limitaciones de edición según permisos de equipo",
-      author: "Basado en configuración real",
-      views: 0,
-      lastUpdated: "Pendiente",
-      readTime: "2 min",
-      difficulty: "Básico",
-      priority: "Media",
-    },
-    {
-      id: 4,
-      title: "Un caso se quedó atascado en una etapa",
-      description: "Problemas con el avance automático entre etapas",
-      author: "Basado en workflows reales",
-      views: 0,
-      lastUpdated: "Pendiente",
-      readTime: "5 min",
-      difficulty: "Intermedio",
-      priority: "Alta",
-    },
-    {
-      id: 5,
-      title: "No puedo exportar datos",
-      description: "Permisos de exportación por equipo",
-      author: "Basado en configuración real",
-      views: 0,
-      lastUpdated: "Pendiente",
-      readTime: "3 min",
-      difficulty: "Básico",
-      priority: "Media",
+      href: "/article/permissions-5",
     },
     {
       id: 6,
-      title: "Problemas con reasignación de casos",
-      description: "Qué pasa cuando un vendedor deja el equipo",
-      author: "Basado en protocolos reales",
-      views: 0,
-      lastUpdated: "Pendiente",
-      readTime: "6 min",
-      difficulty: "Intermedio",
+      title: "¿Qué pasa con los casos si un vendedor se va?",
+      description:
+        "Procedimiento de reasignación de casos y tareas para garantizar que ningún cliente quede desatendido.",
+      author: "Equipo de Operaciones",
+      views: 98,
+      lastUpdated: "3 junio 2025",
+      readTime: "4 min",
+      difficulty: "Básico",
       priority: "Media",
+      href: "/article/troubleshooting-6",
     },
   ]
 
@@ -159,7 +119,7 @@ export default function TroubleshootingPage() {
         {/* Articles List */}
         <div className="space-y-4">
           {articles.map((article) => (
-            <Link key={article.id} href={`/article/troubleshooting-${article.id}`}>
+            <Link key={article.id} href={article.href}>
               <Card className="hover:shadow-md transition-shadow cursor-pointer">
                 <CardContent className="p-6">
                   <div className="flex justify-between items-start mb-3">

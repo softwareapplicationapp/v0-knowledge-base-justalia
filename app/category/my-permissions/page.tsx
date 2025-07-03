@@ -9,53 +9,25 @@ export default function MyPermissionsPage() {
   const articles = [
     {
       id: 1,
-      title: "Permisos del equipo Justalia (Paternity + Revolving)",
-      description: "Qué puedes ver y editar si perteneces a Justalia y sus subequipos",
-      author: "Basado en configuración real",
-      views: 0,
-      lastUpdated: "Pendiente",
-      readTime: "5 min",
+      title: "Permisos por Equipo: ¿Qué puedo ver y hacer?",
+      description: "Un resumen claro de los permisos para los equipos Justalia, RUA, CPM y Legal.",
+      author: "Equipo de Operaciones",
+      views: 182,
+      lastUpdated: "3 junio 2025",
+      readTime: "7 min",
       difficulty: "Básico",
-    },
-    {
-      id: 2,
-      title: "Permisos del equipo RUA (Revolving)",
-      description: "Accesos específicos para RUA Customer Service, Sales Team y subequipos",
-      author: "Basado en configuración real",
-      views: 0,
-      lastUpdated: "Pendiente",
-      readTime: "4 min",
-      difficulty: "Básico",
-    },
-    {
-      id: 3,
-      title: "Permisos del equipo CPM (Call Center)",
-      description: "Limitaciones y accesos para CPM Sales Team y Validation Team",
-      author: "Basado en configuración real",
-      views: 0,
-      lastUpdated: "Pendiente",
-      readTime: "3 min",
-      difficulty: "Básico",
-    },
-    {
-      id: 4,
-      title: "Permisos del Legal Team",
-      description: "Accesos especiales para el equipo legal (REV + PAT)",
-      author: "Basado en configuración real",
-      views: 0,
-      lastUpdated: "Pendiente",
-      readTime: "4 min",
-      difficulty: "Básico",
+      href: "/article/permissions-1",
     },
     {
       id: 5,
-      title: "¿Por qué no puedo ver ciertos casos?",
-      description: "Explicación de las restricciones 'Su equipo' vs 'Todo' vs 'Sin asignar'",
-      author: "Basado en configuración real",
-      views: 0,
-      lastUpdated: "Pendiente",
+      title: "¿Por qué no puedo ver ciertos casos o contactos?",
+      description: "La explicación simple a la duda más común: las reglas de visibilidad 'Mi equipo' vs 'Sin asignar'.",
+      author: "Equipo de Operaciones",
+      views: 121,
+      lastUpdated: "3 junio 2025",
       readTime: "3 min",
       difficulty: "Básico",
+      href: "/article/permissions-5",
     },
   ]
 
@@ -138,7 +110,7 @@ export default function MyPermissionsPage() {
         {/* Articles List */}
         <div className="space-y-4">
           {articles.map((article) => (
-            <Link key={article.id} href={`/article/permissions-${article.id}`}>
+            <Link key={article.id} href={article.href}>
               <Card className="hover:shadow-md transition-shadow cursor-pointer">
                 <CardContent className="p-6">
                   <div className="flex justify-between items-start mb-3">
