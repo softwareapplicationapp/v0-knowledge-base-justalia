@@ -1,15 +1,15 @@
 "use client"
 
-import { useForm, type SubmitHandler } from "react-hook-form"
+import { useForm, type SubmitHandler, Controller } from "react-hook-form"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import type { Article } from "@/lib/types"
 import { useCategories } from "@/hooks/use-categories"
 import { useEffect } from "react"
+import { RichTextEditor } from "./rich-text-editor"
 
 interface ArticleFormProps {
   onSubmit: SubmitHandler<FormValues>
@@ -29,6 +29,7 @@ export function ArticleForm({ onSubmit, defaultValues, isEditing = false }: Arti
     setValue,
     watch,
     reset,
+    control,
   } = useForm<FormValues>({
     defaultValues,
   })
@@ -61,12 +62,12 @@ export function ArticleForm({ onSubmit, defaultValues, isEditing = false }: Arti
       </div>
 
       <div>
-        <Label htmlFor="content">Contenido (Markdown)</Label>
-        <Textarea
-          id="content"
-          {...register("content", { required: "El contenido es obligatorio" })}
-          rows={15}
-          className="mt-1"
+        <Label htmlFor="content">Contenido</Label>
+        <Controller
+          name="content"
+          control={control}
+          rules={{ required: "El contenido es obligatorio" }}
+          render={({ field }) => <RichTextEditor value={field.value} onChange={field.onChange} />}
         />
         {errors.content && <p className="text-red-500 text-sm mt-1">{errors.content.message}</p>}
       </div>
@@ -77,7 +78,6 @@ export function ArticleForm({ onSubmit, defaultValues, isEditing = false }: Arti
           <Select
             onValueChange={(value) => setValue("category", value, { shouldValidate: true })}
             value={categoryValue}
-            {...register("category", { required: "La categoría es obligatoria" })}
           >
             <SelectTrigger className="mt-1">
               <SelectValue placeholder="Selecciona una categoría" />
@@ -106,7 +106,6 @@ export function ArticleForm({ onSubmit, defaultValues, isEditing = false }: Arti
               setValue("difficulty", value, { shouldValidate: true })
             }
             value={difficultyValue}
-            {...register("difficulty", { required: "La dificultad es obligatoria" })}
           >
             <SelectTrigger className="mt-1">
               <SelectValue placeholder="Selecciona una dificultad" />
