@@ -82,7 +82,7 @@ export default function ArticlePage() {
           </div>
         </div>
 
-        <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: article.content }} />
+        <article className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: article.content }} />
       </div>
     </div>
   )
