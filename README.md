@@ -1,9 +1,9 @@
-# Knowledge Base Justalia
+# Client knowledge base
 
 *Automatically synced with your [v0.dev](https://v0.dev) deployments*
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/ccntslol-8352s-projects/v0-knowledge-base-justalia)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/dnfR5CbiN9n)
+[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/edel-2017s-projects/v0-client-knowledge-base)
+[![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/YGpdyy8G1kw)
 
 ## Overview
 
@@ -14,13 +14,13 @@ Any changes you make to your deployed app will be automatically pushed to this r
 
 Your project is live at:
 
-**[https://vercel.com/ccntslol-8352s-projects/v0-knowledge-base-justalia](https://vercel.com/ccntslol-8352s-projects/v0-knowledge-base-justalia)**
+**[https://vercel.com/edel-2017s-projects/v0-client-knowledge-base](https://vercel.com/edel-2017s-projects/v0-client-knowledge-base)**
 
 ## Build your app
 
 Continue building your app on:
 
-**[https://v0.dev/chat/projects/dnfR5CbiN9n](https://v0.dev/chat/projects/dnfR5CbiN9n)**
+**[https://v0.dev/chat/projects/YGpdyy8G1kw](https://v0.dev/chat/projects/YGpdyy8G1kw)**
 
 ## How It Works
 
