@@ -31,10 +31,10 @@ export function ChatInterface() {
 
   return (
     <div className="w-full max-w-4xl mx-auto">
-      <Card className="h-[550px] flex flex-col shadow-lg rounded-xl">
-        <CardContent className="flex-1 p-0 flex flex-col">
-          <ScrollArea className="h-full flex-1" ref={scrollAreaRef}>
-            <div className="space-y-6 p-6">
+      <Card className="h-[550px] flex flex-col shadow-lg rounded-xl overflow-hidden">
+        <CardContent className="flex-1 p-0 flex flex-col overflow-hidden">
+          <ScrollArea className="flex-1 p-6">
+            <div className="space-y-6">
               {messages.length === 0 && !isLoading && (
                 <div className="text-center text-gray-500 pt-16">
                   <Bot className="w-12 h-12 mx-auto mb-4 text-gray-400" />
