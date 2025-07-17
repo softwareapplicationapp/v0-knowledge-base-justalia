@@ -31,7 +31,7 @@ export function ChatInterface() {
 
   return (
     <div className="w-full max-w-4xl mx-auto">
-      <Card className="h-[600px] flex flex-col shadow-lg rounded-xl">
+      <Card className="h-[550px] flex flex-col shadow-lg rounded-xl">
         <CardContent className="flex-1 p-0 flex flex-col">
           <ScrollArea className="h-full flex-1" ref={scrollAreaRef}>
             <div className="space-y-6 p-6">
